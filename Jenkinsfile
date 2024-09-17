@@ -7,6 +7,8 @@ pipeline {
                 echo 'Stage 1: Build Process'
                 echo 'Details: The code is being built using an automation tool that compiles and packages the application.'
                 echo 'Automation Tool: Maven is being utilized for automating the build process.'
+                // Example build command (replace with your actual build command)
+                sh 'mvn clean package'
             }
         }
         
@@ -15,6 +17,8 @@ pipeline {
                 echo 'Stage 2: Unit and Integration Testing'
                 echo 'Details: Executing unit tests to verify functionality and integration tests to ensure that all components work together as intended.'
                 echo 'Testing Framework: JUnit 5 is used for performing unit tests.'
+                // Example test command
+                sh 'mvn test'
             }
             post {
                 success {
@@ -41,6 +45,8 @@ pipeline {
                 echo 'Stage 3: Code Quality Analysis'
                 echo 'Details: Performing a code analysis to ensure it adheres to industry standards and best practices.'
                 echo 'Analysis Tool: SonarQube is employed for static code analysis.'
+                // Example SonarQube command
+                sh 'mvn sonar:sonar'
             }
         }
         
@@ -49,6 +55,8 @@ pipeline {
                 echo 'Stage 4: Security Vulnerability Scan'
                 echo 'Details: Conducting a security scan to identify potential vulnerabilities in the application.'
                 echo 'Security Tool: OWASP Dependency-Check is utilized for scanning vulnerabilities.'
+                // Example security scan command
+                sh 'dependency-check --scan .'
             }
             post {
                 success {
@@ -74,6 +82,8 @@ pipeline {
             steps {
                 echo 'Stage 5: Deployment to Staging'
                 echo 'Details: Deploying the application to the staging environment, simulating a production-like AWS EC2 instance.'
+                // Example deployment command to staging
+                sh 'scp target/myapp.jar user@staging-server:/path/to/deploy/'
             }
         }
         
@@ -81,6 +91,8 @@ pipeline {
             steps {
                 echo 'Stage 6: Integration Testing in Staging'
                 echo 'Details: Running integration tests in the staging environment to ensure the application behaves as expected in a production-simulated environment.'
+                // Example integration test command on staging
+                sh './run-integration-tests.sh'
             }
         }
         
@@ -88,6 +100,8 @@ pipeline {
             steps {
                 echo 'Stage 7: Deployment to Production'
                 echo 'Details: Deploying the application to the production environment on AWS EC2.'
+                // Example deployment command to production
+                sh 'scp target/myapp.jar user@production-server:/path/to/deploy/'
             }
         }
     }
