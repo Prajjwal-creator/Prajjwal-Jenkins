@@ -19,14 +19,14 @@ pipeline {
             post {
                 success {
                     emailext(
-                        to: 'prajjwalmakkar@gmail.com',
+                        to: 'prajjwalmakkar0405@gmail.com',
                         subject: 'Tests Passed',
                         body: 'All tests passed successfully.'
                     )
                 }
                 failure {
                     emailext(
-                        to: 'prajjwalmakkar@gmail.com',
+                        to: 'prajjwalmakkar0405@gmail.com',
                         subject: 'Tests Failed',
                         body: 'Tests failed. Please check the logs.'
                     )
@@ -51,14 +51,14 @@ pipeline {
             post {
                 success {
                     emailext(
-                        to: 'prajjwalmakkar@gmail.com',
+                        to: 'prajjwalmakkar0405@gmail.com',
                         subject: 'Security Scan Passed',
                         body: 'Security scan completed successfully.'
                     )
                 }
                 failure {
                     emailext(
-                        to: 'prajjwalmakkar@gmail.com',
+                        to: 'prajjwalmakkar0405@gmail.com',
                         subject: 'Security Scan Failed',
                         body: 'Security scan failed. Please check the logs.'
                     )
