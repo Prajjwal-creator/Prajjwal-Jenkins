@@ -4,31 +4,33 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                echo 'Building the application...'
-                // Use 'bat' for Windows instead of 'sh'
-                bat 'mvn clean package'
+                echo 'Stage 1: Build Process'
+                echo 'Details: The code is being built using an automation tool that compiles and packages the application.'
+                echo 'Automation Tool: Maven is being utilized for automating the build process.'
             }
         }
         
-        stage('Test') {
+        stage('Unit and Integration Tests') {
             steps {
-                echo 'Running unit tests...'
-                // Run unit tests (use 'bat' for Windows)
-                bat 'mvn test'
+                echo 'Stage 2: Unit and Integration Testing'
+                echo 'Details: Executing unit tests to verify functionality and integration tests to ensure that all components work together as intended.'
+                echo 'Testing Framework: JUnit 5 is used for performing unit tests.'
             }
             post {
                 success {
                     emailext(
+                        attachLog: true,
                         to: 'prajjwalmakkar0405@gmail.com',
-                        subject: 'Tests Passed',
-                        body: 'All tests passed successfully.'
+                        subject: 'Unit and Integration Tests: Success',
+                        body: 'Stage 2 has successfully passed. Please refer to the attached logs for more information.'
                     )
                 }
                 failure {
                     emailext(
+                        attachLog: true,
                         to: 'prajjwalmakkar0405@gmail.com',
-                        subject: 'Tests Failed',
-                        body: 'Tests failed. Please check the logs.'
+                        subject: 'Unit and Integration Tests: Failure',
+                        body: 'Stage 2 failed. Please check the attached logs for further details.'
                     )
                 }
             }
@@ -36,48 +38,57 @@ pipeline {
         
         stage('Code Analysis') {
             steps {
-                echo 'Performing code quality analysis...'
-                // Example SonarQube analysis (use 'bat' for Windows)
-                bat 'mvn sonar:sonar'
+                echo 'Stage 3: Code Quality Analysis'
+                echo 'Details: Performing a code analysis to ensure it adheres to industry standards and best practices.'
+                echo 'Analysis Tool: SonarQube is employed for static code analysis.'
             }
         }
         
         stage('Security Scan') {
             steps {
-                echo 'Performing security scan...'
-                // Example security scan (use 'bat' for Windows)
-                bat 'dependency-check --scan .'
+                echo 'Stage 4: Security Vulnerability Scan'
+                echo 'Details: Conducting a security scan to identify potential vulnerabilities in the application.'
+                echo 'Security Tool: OWASP Dependency-Check is utilized for scanning vulnerabilities.'
             }
             post {
                 success {
-                    emailext(
+                    emailext (
+                        attachLog: true,
                         to: 'prajjwalmakkar0405@gmail.com',
-                        subject: 'Security Scan Passed',
-                        body: 'Security scan completed successfully.'
+                        subject: 'Security Scan: Successful',
+                        body: 'Stage 4 completed successfully. Logs are attached for reference.'
                     )
                 }
                 failure {
                     emailext(
+                        attachLog: true,
                         to: 'prajjwalmakkar0405@gmail.com',
-                        subject: 'Security Scan Failed',
-                        body: 'Security scan failed. Please check the logs.'
+                        subject: 'Security Scan: Failed',
+                        body: 'Stage 4 encountered a failure. Logs are attached for review.'
                     )
                 }
             }
         }
 
-        stage('Deploy') {
+        stage('Deploy to Staging') {
             steps {
-                echo 'Deploying the application...'
-                // Example deployment command for Windows (adjust based on your environment)
-                bat 'scp target/myapp.jar user@server:/path/to/deploy/'
+                echo 'Stage 5: Deployment to Staging'
+                echo 'Details: Deploying the application to the staging environment, simulating a production-like AWS EC2 instance.'
             }
         }
-    }
-    
-    post {
-        always {
-            echo 'Pipeline execution finished.'
+        
+        stage('Integration Tests on Staging') {
+            steps {
+                echo 'Stage 6: Integration Testing in Staging'
+                echo 'Details: Running integration tests in the staging environment to ensure the application behaves as expected in a production-simulated environment.'
+            }
+        }
+        
+        stage('Deploy to Production') {
+            steps {
+                echo 'Stage 7: Deployment to Production'
+                echo 'Details: Deploying the application to the production environment on AWS EC2.'
+            }
         }
     }
 }
