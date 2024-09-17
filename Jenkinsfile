@@ -5,16 +5,16 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building the application...'
-                // Example build command (Maven)
-                sh 'mvn clean package'
+                // Use 'bat' for Windows instead of 'sh'
+                bat 'mvn clean package'
             }
         }
         
         stage('Test') {
             steps {
                 echo 'Running unit tests...'
-                // Run unit tests (JUnit)
-                sh 'mvn test'
+                // Run unit tests (use 'bat' for Windows)
+                bat 'mvn test'
             }
             post {
                 success {
@@ -37,16 +37,16 @@ pipeline {
         stage('Code Analysis') {
             steps {
                 echo 'Performing code quality analysis...'
-                // Example code analysis (SonarQube)
-                sh 'mvn sonar:sonar'
+                // Example SonarQube analysis (use 'bat' for Windows)
+                bat 'mvn sonar:sonar'
             }
         }
         
         stage('Security Scan') {
             steps {
                 echo 'Performing security scan...'
-                // Example security scan (OWASP Dependency Check)
-                sh 'dependency-check --scan .'
+                // Example security scan (use 'bat' for Windows)
+                bat 'dependency-check --scan .'
             }
             post {
                 success {
@@ -69,8 +69,8 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo 'Deploying the application...'
-                // Example deployment command (adjust to your environment)
-                sh 'scp target/myapp.jar user@server:/path/to/deploy/'
+                // Example deployment command for Windows (adjust based on your environment)
+                bat 'scp target/myapp.jar user@server:/path/to/deploy/'
             }
         }
     }
